@@ -6,4 +6,4 @@ Firstly run
 pip install -r requirements.txt
 ```
 Then run the program
-Добавлю ещё описания позже. Это ранний билд
+Archive: https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-abstract.xml.gz
