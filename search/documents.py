@@ -1,6 +1,5 @@
 from collections import Counter
 from dataclasses import dataclass
-
 from .analysis import analyze
 
 @dataclass
@@ -10,6 +9,7 @@ class WikiPage:
     title: str
     abstract: str
     url: str
+    path: str
 
     @property
     def fulltext(self):
@@ -20,3 +20,22 @@ class WikiPage:
 
     def term_frequency(self, term):
         return self.term_frequencies.get(term, 0)
+    
+@dataclass
+class TextFile:
+    ID: int
+    abstract: str
+    path: str
+    
+    @property
+    def fulltext(self):
+        return self.abstract
+    
+    def analyze(self):
+        self.term_frequencies = Counter(analyze(self.fulltext))
+
+    def term_frequency(self, term):
+        return self.term_frequencies.get(term, 0)
+    
+    
+    

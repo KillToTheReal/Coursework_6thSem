@@ -2,18 +2,21 @@ import math
 
 from .timing import timing
 from .analysis import analyze
-from .documents import WikiPage
+from .documents import WikiPage, TextFile
+from typing import Union
 
 class Index:
     def __init__(self):
         self.index = {}
         self.documents = {}
 
-    def index_document(self, document:WikiPage):
+    def index_document(self, document: Union[WikiPage, TextFile]):
+        print(document.ID)
         if document.ID not in self.documents:
             self.documents[document.ID] = document
             document.analyze()
-
+            print('Document analyzed')
+            
         for token in analyze(document.fulltext):
             if token not in self.index:
                 self.index[token] = set()
@@ -26,7 +29,10 @@ class Index:
         # https://ru.wikipedia.org/wiki/TF-IDF
         # https://nlp.stanford.edu/IR-book/html/htmledition/inverse-document-frequency-1.html
         return math.log10(len(self.documents) / self.document_frequency(token))
-
+    
+    def all_data(self):
+        return self.documents, self.index
+    
     def _results(self, analyzed_query):
         return [self.index.get(token, set()) for token in analyzed_query]
 

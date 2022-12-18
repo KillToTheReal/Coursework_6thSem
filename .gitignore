@@ -109,7 +109,13 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+.xml
+.gz
+.zip
+.7z
+.tar
+.tar.gz
+.xml.gz
 # Spyder project settings
 .spyderproject
 .spyproject
