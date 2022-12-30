@@ -11,11 +11,9 @@ class Index:
         self.documents = {}
 
     def index_document(self, document: Union[WikiPage, TextFile]):
-        print(document.ID)
         if document.ID not in self.documents:
             self.documents[document.ID] = document
             document.analyze()
-            print('Document analyzed')
             
         for token in analyze(document.fulltext):
             if token not in self.index:
