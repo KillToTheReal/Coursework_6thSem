@@ -23,6 +23,7 @@ class WikiPage:
     
 @dataclass
 class TextFile:
+    """Файлы, которые представляют собой Plain Text. Т.е rtf,txt и т.д"""
     ID: int
     abstract: str
     path: str
@@ -40,6 +41,7 @@ class TextFile:
     
 @dataclass
 class PDFFile:
+    """PDF файлы"""
     ID: int
     abstract: str
     page: int
@@ -56,24 +58,8 @@ class PDFFile:
         return self.term_frequencies.get(term, 0)
     
 @dataclass
-class XLSFile:
-    ID: int
-    abstract: str
-    row: int
-    path: str
-    
-    @property
-    def fulltext(self):
-        return self.abstract
-    
-    def analyze(self):
-        self.term_frequencies = Counter(analyze(self.fulltext))
-
-    def term_frequency(self, term):
-        return self.term_frequencies.get(term, 0)
-    
-@dataclass
 class DOCXFile:
+    """DOCX файлы"""
     ID: int
     abstract: str
     paragraph: int

@@ -33,8 +33,8 @@ if __name__ == '__main__':
     # Скачивает XML если нет файла;
     # Если нужна свежая копия удалите файл
     # С pickle - файлами то же самое
-    if not os.path.exists('data/enwiki-latest-abstract.xml.gz'):
-        download_wikipedia_abstracts()
+    # if not os.path.exists('data/enwiki-latest-abstract.xml.gz'):
+    #     download_wikipedia_abstracts()
 
     # if not os.path.exists('data/map.pickle'):
     #     index = index_documents(load_documents(), Index()) 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     print(f'Index contains {len(index.documents)} documents')
     # print(index.search('Python programming language', search_type='AND',rank=True)[:2])
     # print(index.search('Python programming language', search_type='AND', rank=True)[:2])
-    myarray = index.search('lorem', search_type='OR')
+    myarray = index.search('rtf', search_type='OR')
     print(myarray)
     pages = [x.path for x in myarray]
     print(pages)

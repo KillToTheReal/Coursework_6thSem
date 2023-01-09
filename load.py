@@ -1,13 +1,10 @@
 import gzip
-import pandas as pd
 import pypdfium2 as pdfium
 from lxml import etree
 import time
 import os
 import docx
-import codecs
-from search.documents import WikiPage, TextFile, PDFFile, XLSFile, DOCXFile
-import openpyxl
+from search.documents import WikiPage, TextFile, PDFFile, DOCXFile
 def load_documents(path_from):
     start_path = path_from # current directory
     start = time.time()
@@ -16,7 +13,7 @@ def load_documents(path_from):
         for filename in files:
             path_to_file = os.path.join(path,filename)
             
-            if filename.endswith('.txt'):
+            if filename.endswith('.txt') or filename.endswith('.rtf') or filename.endswith('.html'):
                 with open(path_to_file) as f:
                     abstract = f.read()
                     yield TextFile(ID=doc_id, abstract=abstract, path=path_to_file)
@@ -40,15 +37,15 @@ def load_documents(path_from):
                     parag += 1 
                     doc_id += 1    
 
-            # elif filename == 'enwiki-latest-abstract.xml.gz':
-            #     with gzip.open('data/enwiki-latest-abstract.xml.gz', 'rb') as f:   
-            #         for _, element in etree.iterparse(f, events=('end',), tag='doc'):
-            #             title = element.findtext('./title')
-            #             url = element.findtext('./url')
-            #             abstract = element.findtext('./abstract')
-            #             path = './data/123.xml'
-            #             yield WikiPage(ID=doc_id, title=title, url=url, abstract=abstract, path=path)
-            #             doc_id += 1
-            #             element.clear()
+            elif filename == 'enwiki-latest-abstract.xml.gz':
+                with gzip.open('data/enwiki-latest-abstract.xml.gz', 'rb') as f:   
+                    for _, element in etree.iterparse(f, events=('end',), tag='doc'):
+                        title = element.findtext('./title')
+                        url = element.findtext('./url')
+                        abstract = element.findtext('./abstract')
+                        path = './data/123.xml'
+                        yield WikiPage(ID=doc_id, title=title, url=url, abstract=abstract, path=path)
+                        doc_id += 1
+                        element.clear()
     end = time.time()
     print(f'Parsing Documents took {end - start} seconds')
